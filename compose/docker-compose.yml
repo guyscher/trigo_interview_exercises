@@ -1,27 +1,18 @@
 version: "3.9"
 services:
   prometheus:
-  #   image: bitnami/prometheus
-    build: ../prometheus
+    image: bitnami/prometheus
     volumes:
       - ../prometheus/prometheus.yml:/opt/bitnami/prometheus/conf/prometheus.yml
-    # hostname: 'prometheus'
-    ports:
-      - "9090:9090"
     container_name: prometheus-container
     network_mode: host 
-    # networks:
-    #   - app-network
 
   inventory_server:
     build: ../inventory_server
-    # hostname: 'inventory_server'
-    ports:
-      - "1337:1337"
     container_name: inventory_server-container
     network_mode: host 
-    # networks:
-    #   - app-network
 
-# networks:
-#   app-network:
+  custom_service_discovery:
+    build: ../prometheus_python_client
+    container_name: custom_service_discovery
+    network_mode: host 
